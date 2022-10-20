@@ -1,8 +1,2 @@
 /venv
-/data/anomaly_treated/
-/data/cleaned_data/
-/data/features/
-/data/models/
-/data/plots_figs/
-/data/predictions/
-/data/raw_dataset
+/scores.json
