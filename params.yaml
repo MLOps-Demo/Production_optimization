@@ -1,5 +1,5 @@
 anomaly_detect:
-  seed: 36
+  seed: 42
   anomaly_contamination: 0.01
 
 data-split:
