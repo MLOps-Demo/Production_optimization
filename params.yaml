@@ -1,0 +1,14 @@
+anomaly_detect:
+  seed: 36
+  anomaly_contamination: 0.01
+
+data-split:
+  split: 0.2
+  seed: 42
+
+training:
+  n_est: 100
+  m_depth: 4
+  lr: 0.02
+  min_split: 6
+  min_leaf: 5

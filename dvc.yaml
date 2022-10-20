@@ -1,0 +1,79 @@
+stages:
+  create-dataset:
+    cmd: python src/create_dataset.py
+    deps:
+      - data/raw_dataset/clean_data.csv
+      - src/create_dataset.py
+      - src/config.py
+    outs:
+      - data/cleaned_data/dataset.csv
+  anomaly-detect:
+    cmd: python src/anomaly_detect.py
+    deps:
+      - data/cleaned_data/dataset.csv
+      - src/anomaly_detect.py
+      - src/config.py
+    params:
+      - anomaly_detect.seed
+      - anomaly_detect.anomaly_contamination 
+    outs:
+      - data/anomaly_treated/anomaly_treated_data.csv
+      - data/plots_figs/anomaly_detect_plt_pca.png
+      - data/plots_figs/anomaly_detect_plt_tsne.png
+  data-split:
+    cmd: python src/data_split.py
+    deps:
+      - data/anomaly_treated/anomaly_treated_data.csv
+      - src/data_split.py
+      - src/config.py
+    params:
+      - data-split.split
+      - data-split.seed
+    outs:
+    - data/features/x_test.npy
+    - data/features/x_train.npy
+    - data/features/y_test.npy
+    - data/features/y_train.npy
+  normalize:
+    cmd: python src/normalize.py
+    deps:
+      - data/features/x_train.npy
+      - data/features/x_test.npy
+      - src/normalize.py
+      - src/config.py
+    outs:
+      - data/models/scaling_model.pkl
+  training:
+    cmd: python src/training.py
+    deps:
+      - data/features/x_train.npy
+      - data/features/y_train.npy
+      - data/models/scaling_model.pkl
+      - src/training.py
+      - src/learning_curves.py
+      - src/config.py
+    params:
+      - training.n_est
+      - training.m_depth
+      - training.lr
+      - training.min_split
+      - training.min_leaf
+    outs:
+      - data/models/gbrt_model.pkl
+      - data/plots_figs/learning_curve.png
+  evaluate:
+    cmd: python src/evaluate.py
+    deps:
+      - data/features/x_test.npy
+      - data/features/y_test.npy
+      - data/models/scaling_model.pkl
+      - data/models/gbrt_model.pkl
+      - src/evaluate.py
+      - src/config.py
+    outs:
+      - data/predictions/prediction.csv
+      - data/plots_figs/deviance.png
+      - data/plots_figs/feature_importance.png
+    metrics:
+      - scores.json:
+          cache: false
