@@ -1,4 +1,4 @@
 [core]
     remote = mys3remote
 ['remote "mys3remote"']
-    url = s3://dyna-mlops-usecases/Sathish_ML_experiment/Trustworthy_AI/
+    url = s3://dyna-mlops-usecases/Sathish_ML_experiment/Trustworthy_AI_remote/
