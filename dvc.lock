@@ -10,8 +10,8 @@ stages:
       md5: 952fc933b8732c5ff54c7683cec8089b
       size: 499
     - path: src/create_dataset.py
-      md5: 9cb650ac53289378b07c4336d887bc91
-      size: 832
+      md5: 40a61d893b6494f5e4db278e3116c591
+      size: 837
     outs:
     - path: data/cleaned_data/dataset.csv
       md5: 6e032aac042ee4bbd4b47ca55fa02af9
