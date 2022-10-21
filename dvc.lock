@@ -3,17 +3,17 @@ stages:
   create-dataset:
     cmd: python src/create_dataset.py
     deps:
-    - path: data/original_dataset/clean_data.csv
-      md5: f0cd8ff9e7cd4a7e86ab7074c7055dab
-      size: 199942
+    - path: data/cleaned_data/dataset.csv
+      md5: 6e032aac042ee4bbd4b47ca55fa02af9
+      size: 199998
     - path: src/config.py
       md5: fb091cc52a55961ad7794da791d7471f
       size: 509
     - path: src/create_dataset.py
-      md5: 9ca9f2730403b9017a759d317fde6ee7
-      size: 848
+      md5: 11613e9c9cf21246def2b2e56ec261e1
+      size: 867
     outs:
-    - path: data/cleaned_data/dataset.csv
+    - path: data/cleaned_data/dataset_dummy.csv
       md5: 6e032aac042ee4bbd4b47ca55fa02af9
       size: 199998
   anomaly-detect:
