@@ -31,7 +31,7 @@ jobs:
           pip install -r requirements.txt
 
           # Pull latest data from remote
-          dvc pull -r myS3remote
+          dvc pull --remote -r
 
           # Reproduce pipeline if any changes detected in dependencies
           dvc repro
@@ -41,7 +41,12 @@ jobs:
           
           # Use DVC metrics diff to compare metrics to master
           git fetch --prune --unshallow
-          dvc metrics diff --show-md master >> report.md
+
+          # Adding header to the MD file
+          echo -e "## Model Metrics" >> report.md
+          
+          # Adding the metrics
+          dvc metrics diff --show-md main >> report.md
           cml-send-comment report.md
           
           # Add figure to report
@@ -58,7 +63,7 @@ jobs:
           cml-send-comment report5.md
 
       - uses: keithweaver/aws-s3-github-action@v1.0.0
-        name: Copy Folder
+        name: Copy Models to S3 Folder
         with:
             command: cp
             source: ./data/models/
