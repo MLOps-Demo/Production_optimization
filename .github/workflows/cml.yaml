@@ -31,7 +31,7 @@ jobs:
           pip install -r requirements.txt
 
           # Pull latest data from remote
-          dvc pull -r ./data
+          dvc pull
 
           # Reproduce pipeline if any changes detected in dependencies
           dvc repro
