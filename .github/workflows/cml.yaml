@@ -13,9 +13,9 @@ jobs:
 
       - uses: iterative/setup-dvc@v1
 
-      - uses: actions/setup-python@v2
+      - uses: actions/setup-python@v4
         with:
-          python-version: '3.x'
+          python-version: '3.8'
 
       - uses: unfor19/install-aws-cli-action@master
         with:
@@ -33,30 +33,30 @@ jobs:
           # Pull latest data from remote
           dvc pull
 
-          # Reproduce pipeline if any changes detected in dependencies
-          dvc repro
+          # # Reproduce pipeline if any changes detected in dependencies
+          # dvc repro
 
-          # Testing aws cli command
-          aws s3 cp data/models/ s3://dyna-mlops-usecases/production_optimization/deployed_models/production_optimization_bins_oct_2022/ --recursive
+          # # Testing aws cli command
+          # aws s3 cp data/models/ s3://dyna-mlops-usecases/production_optimization/deployed_models/production_optimization_bins_oct_2022/ --recursive
           
-          # Use DVC metrics diff to compare metrics to master
-          git fetch --prune --unshallow
+          # # Use DVC metrics diff to compare metrics to master
+          # git fetch --prune --unshallow
 
-          # Adding header to the MD file
-          echo -e "## Model Metrics" >> report.md
-          # Adding the metrics
-          dvc metrics diff --show-md main >> report.md
-          cml-send-comment report.md
+          # # Adding header to the MD file
+          # echo -e "## Model Metrics" >> report.md
+          # # Adding the metrics
+          # dvc metrics diff --show-md main >> report.md
+          # cml-send-comment report.md
           
-          # Add figure to report
-          cml-publish deviance.png --md >> report1.md
-          cml-publish feature_importance.png --md >> report2.md
-          cml-publish learning_curve.png --md >> report3.md
-          cml-publish anomaly_detect_plt_pca.png --md >> report4.md
-          cml-publish anomaly_detect_plt_tsne.png --md >> report5.md
+          # # Add figure to report
+          # cml-publish deviance.png --md >> report1.md
+          # cml-publish feature_importance.png --md >> report2.md
+          # cml-publish learning_curve.png --md >> report3.md
+          # cml-publish anomaly_detect_plt_pca.png --md >> report4.md
+          # cml-publish anomaly_detect_plt_tsne.png --md >> report5.md
 
-          cml-send-comment report1.md
-          cml-send-comment report2.md
-          cml-send-comment report3.md
-          cml-send-comment report4.md
-          cml-send-comment report5.md
+          # cml-send-comment report1.md
+          # cml-send-comment report2.md
+          # cml-send-comment report3.md
+          # cml-send-comment report4.md
+          # cml-send-comment report5.md
