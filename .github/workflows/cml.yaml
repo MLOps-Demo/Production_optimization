@@ -17,6 +17,10 @@ jobs:
         with:
           python-version: '3.x'
 
+      - uses: unfor19/install-aws-cli-action@master
+        with:
+          version: '2.6.1'
+
       - name: cml
         env:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
