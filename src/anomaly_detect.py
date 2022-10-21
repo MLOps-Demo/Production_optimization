@@ -25,6 +25,10 @@ Config.PLOTS_PATH.mkdir(parents = True, exist_ok = True)
 params = yaml.safe_load(open("params.yaml"))["anomaly_detect"]
 seed = params["seed"]
 contamination = params["anomaly_contamination"]
+neighbours = params["neighbours_knn"]
+clusters = params["clusters_cblof"]
+nu = params["nu_ocsvm"]
+tol = params["tol_ocsvm"]
 
 df = pd.read_csv(Config.CLEANED_DATASET_FILE_PATH/"dataset.csv")
 feature_names = df.drop(['NewDateTime'], axis=1).columns.tolist()    #excluding the first column 'NewDateTime' and choose rest of features
@@ -33,11 +37,11 @@ def anomaly_detect(X, feat_names):
     global anomaly_point_index
     
     classifiers = {
-    'KNN' :  KNN(contamination = contamination, n_neighbors=5, n_jobs=-1),
-    'LOF'   : LOF(contamination= contamination, n_neighbors=5, n_jobs=-1),
+    'KNN' :  KNN(contamination = contamination, n_neighbors=neighbours, n_jobs=-1),
+    'LOF'   : LOF(contamination= contamination, n_neighbors=neighbours, n_jobs=-1),
     'IForest' : IForest(contamination= contamination, n_jobs=-1, random_state = seed),
-    'OCSVM' : OCSVM(contamination = contamination, gamma = 'scale', nu = .01, tol = 0.001),
-    'CBLOF' : CBLOF(contamination = contamination, random_state = seed, n_jobs = -1, n_clusters = 10)
+    'OCSVM' : OCSVM(contamination = contamination, gamma = 'scale', nu = nu, tol = tol),
+    'CBLOF' : CBLOF(contamination = contamination, random_state = seed, n_jobs = -1, n_clusters = clusters)
     }
     
     original_len_df = len(X)

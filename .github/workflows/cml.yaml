@@ -1,0 +1,66 @@
+name: Continuous Machine learning with Anomaly Detection
+
+on: [push]
+
+jobs:
+  run:
+    runs-on: [ubuntu-latest]
+  
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: iterative/setup-cml@v1
+
+      - uses: iterative/setup-dvc@v1
+
+      - uses: actions/setup-python@v2
+        with:
+          python-version: '3.x'
+
+      - name: cml
+        env:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          AWS_ACCESS_KEY_ID: ${{ secrets.SRC_AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.SRC_AWS_SECRET_ACCESS_KEY }}
+          AWS_DEFAULT_REGION: ${{ secrets.SRC_AWS_DEFAULT_REGION }}
+        run: |
+          pip install -r requirements.txt
+
+          # Pull latest data from remote
+          dvc pull -r myS3remote
+
+          # Reproduce pipeline if any changes detected in dependencies
+          dvc repro
+
+          # Copy the generated models to the AWS s3 bucket
+          aws 
+          
+          # Use DVC metrics diff to compare metrics to master
+          git fetch --prune --unshallow
+          dvc metrics diff --show-md master >> report.md
+          cml-send-comment report.md
+          
+          # Add figure to report
+          cml-publish deviance.png --md >> report1.md
+          cml-publish feature_importance.png --md >> report2.md
+          cml-publish learning_curve.png --md >> report3.md
+          cml-publish anomaly_detect_plt_pca.png --md >> report4.md
+          cml-publish anomaly_detect_plt_tsne.png --md >> report5.md
+
+          cml-send-comment report1.md
+          cml-send-comment report2.md
+          cml-send-comment report3.md
+          cml-send-comment report4.md
+          cml-send-comment report5.md
+
+      - uses: keithweaver/aws-s3-github-action@v1.0.0
+        name: Copy Folder
+        with:
+            command: cp
+            source: ./data/models/
+            destination: ${{ secrets.SRC_AWS_S3_BUCKET_MODEL }}
+            aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+            aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+            aws_region: us-east-1
+            flags: --recursive
+
