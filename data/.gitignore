@@ -1,8 +1,7 @@
+/anomaly_treated
 /cleaned_data
 /features
-/data/models
+/models
 /plots_figs
 /predictions
 /raw_dataset
-/models
-/anomaly_treated
