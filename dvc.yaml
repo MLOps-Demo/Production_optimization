@@ -10,7 +10,7 @@ stages:
   anomaly-detect:
     cmd: python src/anomaly_detect.py
     deps:
-      - data/cleaned_data/dataset.csv
+      - data/cleaned_data/dataset_dummy.csv
       - src/anomaly_detect.py
       - src/config.py
     params:
