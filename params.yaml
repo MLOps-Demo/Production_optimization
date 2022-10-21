@@ -1,6 +1,6 @@
 anomaly_detect:
-  seed: 42
-  anomaly_contamination: 0.01
+  seed: 25
+  anomaly_contamination: 0.005
   neighbours_knn: 5
   clusters_cblof: 10
   nu_ocsvm: 0.01
