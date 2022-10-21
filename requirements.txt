@@ -5,3 +5,4 @@ seaborn
 sklearn
 pyod
 PYyaml
+dvc[s3]
