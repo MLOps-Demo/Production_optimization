@@ -36,15 +36,14 @@ jobs:
           # Reproduce pipeline if any changes detected in dependencies
           dvc repro
 
-          # Copy the generated models to the AWS s3 bucket
-          aws 
+          # Testing aws cli command
+          aws s3 cp data/models/ s3://dyna-mlops-usecases/production_optimization/deployed_models/production_optimization_bins_oct_2022/ --recursive
           
           # Use DVC metrics diff to compare metrics to master
           git fetch --prune --unshallow
 
           # Adding header to the MD file
           echo -e "## Model Metrics" >> report.md
-          
           # Adding the metrics
           dvc metrics diff --show-md main >> report.md
           cml-send-comment report.md
@@ -61,15 +60,3 @@ jobs:
           cml-send-comment report3.md
           cml-send-comment report4.md
           cml-send-comment report5.md
-
-      - uses: keithweaver/aws-s3-github-action@v1.0.0
-        name: Copy Models to S3 Folder
-        with:
-            command: cp
-            source: ./data/models/
-            destination: ${{ secrets.SRC_AWS_S3_BUCKET_MODEL }}
-            aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-            aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-            aws_region: us-east-1
-            flags: --recursive
-
