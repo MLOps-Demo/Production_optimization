@@ -15,7 +15,7 @@ jobs:
       - uses: unfor19/install-aws-cli-action@master
         with:
           version: '2.6.1'
-      - name: 'cml'
+      - name: 'cml with anomaly detection'
         env:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
