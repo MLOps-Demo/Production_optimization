@@ -18,9 +18,10 @@ jobs:
       - name: 'Train and Evaluate Model'
         env:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
-          AWS_ACCESS_KEY_ID: ${{ secrets.SRC_AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.SRC_AWS_SECRET_ACCESS_KEY }}
-          AWS_DEFAULT_REGION: ${{ secrets.SRC_AWS_DEFAULT_REGION }}
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_DEFAULT_REGION: ${{ secrets.AWS_DEFAULT_REGION }}
+          AWS_S3_ENDPOINT: https://s3.amazonaws.com
         run: |
           # Intall all dependencies
           pip install -r requirements.txt
@@ -30,27 +31,27 @@ jobs:
           # Reproduce training and evaluate pipeline
           dvc repro 
 
-          # # Testing aws cli command
-          # aws s3 cp data/models/ s3://dyna-mlops-usecases/production_optimization/deployed_models/production_optimization_bins_oct_2022/ --recursive
+          # Testing aws cli command
+          aws s3 cp data/models/ s3://dyna-mlops-usecases/production_optimization/deployed_models/production_optimization_bins_oct_2022/ --recursive
           
-          # # Use DVC metrics diff to compare metrics to master
-          # git fetch --prune --unshallow
+          # Use DVC metrics diff to compare metrics to master
+          git fetch --prune --unshallow
 
-          # # Adding header to the MD file
-          # echo -e "## Model Metrics" >> report.md
-          # # Adding the metrics
-          # dvc metrics diff --show-md main >> report.md
-          # cml-send-comment report.md
+          # Adding header to the MD file
+          echo -e "## Model Metrics" >> report.md
+          # Adding the metrics
+          dvc metrics diff --show-md main >> report.md
+          cml-send-comment report.md
           
-          # # Add figure to report
-          # cml-publish deviance.png --md >> report1.md
-          # cml-publish feature_importance.png --md >> report2.md
-          # cml-publish learning_curve.png --md >> report3.md
-          # cml-publish anomaly_detect_plt_pca.png --md >> report4.md
-          # cml-publish anomaly_detect_plt_tsne.png --md >> report5.md
+          # Add figure to report
+          cml-publish deviance.png --md >> report1.md
+          cml-publish feature_importance.png --md >> report2.md
+          cml-publish learning_curve.png --md >> report3.md
+          cml-publish anomaly_detect_plt_pca.png --md >> report4.md
+          cml-publish anomaly_detect_plt_tsne.png --md >> report5.md
 
-          # cml-send-comment report1.md
-          # cml-send-comment report2.md
-          # cml-send-comment report3.md
-          # cml-send-comment report4.md
-          # cml-send-comment report5.md
+          cml-send-comment report1.md
+          cml-send-comment report2.md
+          cml-send-comment report3.md
+          cml-send-comment report4.md
+          cml-send-comment report5.md
