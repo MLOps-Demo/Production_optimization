@@ -2,7 +2,7 @@ stages:
   create-dataset:
     cmd: python src/create_dataset.py
     deps:
-      - data/raw_dataset/clean_data.csv
+      - data/original_dataset/clean_data.csv
       - src/create_dataset.py
       - src/config.py
     outs:
