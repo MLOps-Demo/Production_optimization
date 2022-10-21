@@ -1,40 +1,34 @@
-name: Continuous Machine learning with Anomaly Detection
+name: Continuous-Machine-learning-with-Anomaly-Detection
 
 on: [push]
 
 jobs:
-  run:
+  model_train_evaluate:
     runs-on: [ubuntu-latest]
-  
     steps:
       - uses: actions/checkout@v2
-
       - uses: iterative/setup-cml@v1
-
       - uses: iterative/setup-dvc@v1
-
       - uses: actions/setup-python@v4
         with:
           python-version: '3.8'
-
       - uses: unfor19/install-aws-cli-action@master
         with:
           version: '2.6.1'
-
-      - name: cml
+      - name: 'Train and Evaluate Model'
         env:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           AWS_ACCESS_KEY_ID: ${{ secrets.SRC_AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.SRC_AWS_SECRET_ACCESS_KEY }}
           AWS_DEFAULT_REGION: ${{ secrets.SRC_AWS_DEFAULT_REGION }}
         run: |
+          # Intall all dependencies
           pip install -r requirements.txt
-
-          # Pull latest data from remote
-          dvc pull
-
-          # # Reproduce pipeline if any changes detected in dependencies
-          # dvc repro
+          # Pull latest data from remote.
+          dvc pull -r myS3remote
+          
+          # Reproduce training and evaluate pipeline
+          dvc repro 
 
           # # Testing aws cli command
           # aws s3 cp data/models/ s3://dyna-mlops-usecases/production_optimization/deployed_models/production_optimization_bins_oct_2022/ --recursive
