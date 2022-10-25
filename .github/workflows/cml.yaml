@@ -41,17 +41,17 @@ jobs:
           echo -e "## Model Metrics" >> report.md
           # Adding the metrics
           dvc metrics diff --show-md main >> report.md
-          cml-send-comment report.md
+          cml comment create report.md
           
           # Add figure to report
-          cml-asset-publish deviance.png --md >> report1.md
-          cml-asset-publish feature_importance.png --md >> report2.md
-          cml-asset-publish learning_curve.png --md >> report3.md
-          cml-asset-publish anomaly_detect_plt_pca.png --md >> report4.md
-          cml-asset-publish anomaly_detect_plt_tsne.png --md >> report5.md
+          cml asset publish deviance.png --md >> report1.md
+          cml asset publish feature_importance.png --md >> report2.md
+          cml asset publish learning_curve.png --md >> report3.md
+          cml asset publish anomaly_detect_plt_pca.png --md >> report4.md
+          cml asset publish anomaly_detect_plt_tsne.png --md >> report5.md
 
-          cml-comment-create report1.md
-          cml-comment-create report2.md
-          cml-comment-create report3.md
-          cml-comment-create report4.md
-          cml-comment-create report5.md
+          cml comment create report1.md
+          cml comment create report2.md
+          cml comment create report3.md
+          cml comment create report4.md
+          cml comment create report5.md
