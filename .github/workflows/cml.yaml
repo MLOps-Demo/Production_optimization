@@ -44,14 +44,14 @@ jobs:
           cml-send-comment report.md
           
           # Add figure to report
-          cml-publish deviance.png --md >> report1.md
-          cml-publish feature_importance.png --md >> report2.md
-          cml-publish learning_curve.png --md >> report3.md
-          cml-publish anomaly_detect_plt_pca.png --md >> report4.md
-          cml-publish anomaly_detect_plt_tsne.png --md >> report5.md
+          cml-asset-publish deviance.png --md >> report1.md
+          cml-asset-publish feature_importance.png --md >> report2.md
+          cml-asset-publish learning_curve.png --md >> report3.md
+          cml-asset-publish anomaly_detect_plt_pca.png --md >> report4.md
+          cml-asset-publish anomaly_detect_plt_tsne.png --md >> report5.md
 
-          cml-send-comment report1.md
-          cml-send-comment report2.md
-          cml-send-comment report3.md
-          cml-send-comment report4.md
-          cml-send-comment report5.md
+          cml-comment-create report1.md
+          cml-comment-create report2.md
+          cml-comment-create report3.md
+          cml-comment-create report4.md
+          cml-comment-create report5.md
