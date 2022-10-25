@@ -2,15 +2,15 @@ stages:
   create-dataset:
     cmd: python src/create_dataset.py
     deps:
-      - data/cleaned_data/dataset.csv
+      - data/original_dataset/clean_data.csv
       - src/create_dataset.py
       - src/config.py
     outs:
-      - data/cleaned_data/dataset_dummy.csv
+      - data/cleaned_data/dataset.csv
   anomaly-detect:
     cmd: python src/anomaly_detect.py
     deps:
-      - data/cleaned_data/dataset_dummy.csv
+      - data/cleaned_data/dataset.csv
       - src/anomaly_detect.py
       - src/config.py
     params:

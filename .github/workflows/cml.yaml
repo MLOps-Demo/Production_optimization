@@ -3,7 +3,7 @@ name: Continuous-Machine-learning-with-Anomaly-Detection
 on: [push]
 
 jobs:
-  model_train_evaluate:
+  cml_with_anomaly_detection:
     runs-on: [ubuntu-latest]
     steps:
       - uses: actions/checkout@v2
