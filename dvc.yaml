@@ -18,6 +18,7 @@ stages:
       - anomaly_detect.anomaly_contamination 
     outs:
       - data/anomaly_treated/anomaly_treated_data.csv
+      - data/anomaly_treated/anomalous_data.csv
       - data/plots_figs/anomaly_detect_plt_pca.png
       - data/plots_figs/anomaly_detect_plt_tsne.png
   data-split:

@@ -1,7 +1,7 @@
-/anomaly_treated
-/original_dataset
-/cleaned_data
-/features
-/models
-/plots_figs
-/predictions
+/anomaly_treated/*
+/original_dataset/*
+/cleaned_data/*
+/features/*
+/models/*
+/plots_figs/*
+/predictions/*

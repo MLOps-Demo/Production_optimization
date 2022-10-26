@@ -27,10 +27,10 @@ jobs:
           AWS_DEFAULT_REGION: ${{ secrets.AWS_DEFAULT_REGION }}
           AWS_S3_ENDPOINT: https://s3.amazonaws.com
         run: |
-          # # Intall all dependencies
-          # pip install -r requirements.txt
-          # # Pull latest data from remote.
-          # dvc pull -r myS3remote
+          # Intall all dependencies
+          pip install -r requirements.txt
+          # Pull latest data from remote.
+          dvc pull -r myS3remote
           
           # Reproduce training and evaluate pipeline
           dvc repro dvc.yaml:data-split

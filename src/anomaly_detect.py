@@ -70,12 +70,13 @@ def anomaly_detect(X, feat_names):
           anomaly_point_index)
     
     #Filtering the Anomalous data points from the dataframe and dropping the newly added model label predicted columns
-    anomalous_df = X[X.anomaly_pred == 'Anomaly']
+    anomalous_df = X[X.anomaly_pred == 'Anomaly'].copy()
+    anomalous_df.drop(['y_pred_KNN','y_pred_LOF','y_pred_IForest','y_pred_OCSVM','y_pred_CBLOF',
+             'anomaly_wt','anomaly_pred'], axis=1, inplace=True)
     X = X[X.anomaly_pred == 'Normal']
     X.drop(['y_pred_KNN','y_pred_LOF','y_pred_IForest','y_pred_OCSVM','y_pred_CBLOF',
              'anomaly_wt','anomaly_pred'], axis=1, inplace=True)
-    anomalous_df.drop(['y_pred_KNN','y_pred_LOF','y_pred_IForest','y_pred_OCSVM','y_pred_CBLOF',
-             'anomaly_wt','anomaly_pred'], axis=1, inplace=True)
+
     final_len_df = len(X)
     final_shape = X.shape
     
