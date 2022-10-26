@@ -1,0 +1,57 @@
+name: Continuous-Machine-learning
+
+on:
+  workflow_run:
+    workflows: [Data-preprocessing-with-Anomaly-Detection]
+    types:
+      - completed
+
+jobs:
+  cml_training:
+    runs-on: [ubuntu-latest]
+    steps:
+      - uses: actions/checkout@v2
+      - uses: iterative/setup-cml@v1
+      - uses: iterative/setup-dvc@v1
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.8'
+      - uses: unfor19/install-aws-cli-action@master
+        with:
+          version: '2.6.1'
+      - name: 'Train and Evaluate Model'
+        env:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_DEFAULT_REGION: ${{ secrets.AWS_DEFAULT_REGION }}
+          AWS_S3_ENDPOINT: https://s3.amazonaws.com
+        run: |
+          # # Intall all dependencies
+          # pip install -r requirements.txt
+          # # Pull latest data from remote.
+          # dvc pull -r myS3remote
+          
+          # Reproduce training and evaluate pipeline
+          dvc repro dvc.yaml:data-split
+          dvc repro dvc.yaml:normalize
+          dvc repro dvc.yaml:training
+          dvc repro dvc.yaml:evaluate
+          
+          # Use DVC metrics diff to compare metrics to master
+          git fetch --prune --unshallow
+
+          # Adding header to the MD file
+          echo -e "## Model Metrics" >> report.md
+          # Adding the metrics
+          dvc metrics diff --show-md main >> report.md
+          cml comment create report.md
+          
+          # Add figure to report
+          cml asset publish data/plots_figs/deviance.png --md >> report1.md
+          cml asset publish data/plots_figs/feature_importance.png --md >> report2.md
+          cml asset publish data/plots_figs/learning_curve.png --md >> report3.md
+
+          cml comment create report1.md
+          cml comment create report2.md
+          cml comment create report3.md

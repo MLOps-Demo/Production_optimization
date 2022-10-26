@@ -23,8 +23,8 @@ stages:
       md5: 6e032aac042ee4bbd4b47ca55fa02af9
       size: 199998
     - path: src/anomaly_detect.py
-      md5: 51013a4016a63cadc07ef7df4780c310
-      size: 6373
+      md5: 51dbb3910b5963423577ce9b50abb26f
+      size: 6795
     - path: src/config.py
       md5: fb091cc52a55961ad7794da791d7471f
       size: 509

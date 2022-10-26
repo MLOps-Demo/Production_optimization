@@ -70,8 +70,11 @@ def anomaly_detect(X, feat_names):
           anomaly_point_index)
     
     #Filtering the Anomalous data points from the dataframe and dropping the newly added model label predicted columns
+    anomalous_df = X[X.anomaly_pred == 'Anomaly']
     X = X[X.anomaly_pred == 'Normal']
     X.drop(['y_pred_KNN','y_pred_LOF','y_pred_IForest','y_pred_OCSVM','y_pred_CBLOF',
+             'anomaly_wt','anomaly_pred'], axis=1, inplace=True)
+    anomalous_df.drop(['y_pred_KNN','y_pred_LOF','y_pred_IForest','y_pred_OCSVM','y_pred_CBLOF',
              'anomaly_wt','anomaly_pred'], axis=1, inplace=True)
     final_len_df = len(X)
     final_shape = X.shape
@@ -81,9 +84,11 @@ def anomaly_detect(X, feat_names):
     anomalies_percent = "{:.2f}".format(((original_len_df - final_len_df)/original_len_df)*100) + ' %'
     print("-Percentage of anomalies removed =", anomalies_percent)
     #path to save the anomaly treated dataset
-    path = str(Config.ANOMALY_TREATED_DATAS_FILE_PATH/ "anomaly_treated_data.csv")
-    X.to_csv(path, index = None)
-    print("\nExported the Cleaned and Anomaly treated dataset to csv file in the path -> '{}'".format(path))
+    normal_path = str(Config.ANOMALY_TREATED_DATAS_FILE_PATH/ "anomaly_treated_data.csv")
+    X.to_csv(normal_path, index = None)
+    anomaly_path = str(Config.ANOMALY_TREATED_DATAS_FILE_PATH/ "anomalous_data.csv")
+    anomalous_df.to_csv(anomaly_path, index = None)
+    print("\nExported the Anomaly treated and anomalous dataset separately to csv file in the folder -> '{}'".format(str(Config.ANOMALY_TREATED_DATAS_FILE_PATH)))
     
     return
 

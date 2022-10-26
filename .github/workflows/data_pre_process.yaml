@@ -1,9 +1,9 @@
-name: Continuous-Machine-learning-with-Anomaly-Detection
+name: Data-preprocessing-with-Anomaly-Detection
 
 on: [push]
 
 jobs:
-  cml_with_anomaly_detection:
+  data_pre_processing:
     runs-on: [ubuntu-latest]
     steps:
       - uses: actions/checkout@v2
@@ -15,7 +15,7 @@ jobs:
       - uses: unfor19/install-aws-cli-action@master
         with:
           version: '2.6.1'
-      - name: 'Train and Evaluate Model'
+      - name: 'Anomaly Detection'
         env:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
@@ -29,29 +29,21 @@ jobs:
           dvc pull -r myS3remote
           
           # Reproduce training and evaluate pipeline
-          dvc repro 
+          dvc repro dvc.yaml:create-dataset
+          dvc repro dvc.yaml:anomaly-detect
 
           # Testing aws cli command
-          aws s3 cp data/models/ s3://dyna-mlops-usecases/production_optimization/deployed_models/production_optimization_bins_oct_2022/ --recursive
-          
-          # Use DVC metrics diff to compare metrics to master
-          git fetch --prune --unshallow
+          aws s3 cp data/anomaly_treated/ s3://dyna-mlops-usecases/production_optimization/deployed_models/production_optimization_bins_oct_2022/Anomaly_detection/ --recursive
+          aws s3 cp data/plots_figs/anomaly_detect_plt_pca.png s3://dyna-mlops-usecases/production_optimization/deployed_models/production_optimization_bins_oct_2022/Anomaly_detection/anomaly_detect_plt_pca.png
+          aws s3 cp data/plots_figs/anomaly_detect_plt_tnse.png s3://dyna-mlops-usecases/production_optimization/deployed_models/production_optimization_bins_oct_2022/Anomaly_detection/anomaly_detect_plt_tnse.png
 
-          # Adding header to the MD file
-          echo -e "## Model Metrics" >> report.md
-          # Adding the metrics
-          dvc metrics diff --show-md main >> report.md
-          cml comment create report.md
+          cat status.txt
+          echo "FALSE" > status.txt
+          aws s3 cp status.txt s3://dyna-mlops-usecases/production_optimization/deployed_models/production_optimization_bins_oct_2022/Anomaly_detection/status.txt
           
           # Add figure to report
-          cml asset publish data/plots_figs/deviance.png --md >> report1.md
-          cml asset publish data/plots_figs/feature_importance.png --md >> report2.md
-          cml asset publish data/plots_figs/learning_curve.png --md >> report3.md
           cml asset publish data/plots_figs/anomaly_detect_plt_pca.png --md >> report4.md
           cml asset publish data/plots_figs/anomaly_detect_plt_tsne.png --md >> report5.md
 
-          cml comment create report1.md
-          cml comment create report2.md
-          cml comment create report3.md
           cml comment create report4.md
           cml comment create report5.md
