@@ -37,8 +37,8 @@ jobs:
           aws s3 cp data/plots_figs/anomaly_detect_plt_pca.png s3://dyna-mlops-usecases/production_optimization/deployed_models/production_optimization_bins_oct_2022/Anomaly_detection/anomaly_detect_plt_pca.png
           aws s3 cp data/plots_figs/anomaly_detect_plt_tsne.png s3://dyna-mlops-usecases/production_optimization/deployed_models/production_optimization_bins_oct_2022/Anomaly_detection/anomaly_detect_plt_tsne.png
 
-          cat data\anomaly_treated\status.txt
-          shred --verbose status.txt
+          touch status.txt
+          #shred --verbose status.txt
           echo "FALSE" > status.txt
           aws s3 cp status.txt s3://dyna-mlops-usecases/production_optimization/deployed_models/production_optimization_bins_oct_2022/Anomaly_detection/status.txt
           
