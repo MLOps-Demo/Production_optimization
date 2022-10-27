@@ -37,8 +37,7 @@ jobs:
           dvc repro dvc.yaml:normalize
           dvc repro dvc.yaml:training
           dvc repro dvc.yaml:evaluate
-      - name: 'Creation of CML report'
-        run: |          
+        
           # Use DVC metrics diff to compare metrics to master
           git fetch --prune --unshallow
 
