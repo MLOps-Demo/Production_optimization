@@ -24,7 +24,7 @@ stages:
     plots:
       - data/plots_figs/anomaly_detect_plt_pca.png:
           cache: false
-      - data/plots_figs/anomaly_detect_plt_pca.png:
+      - data/plots_figs/anomaly_detect_plt_tsne.png:
           cache: false
   data-split:
     cmd: python src/data_split.py
@@ -66,7 +66,10 @@ stages:
       - training.min_leaf
     outs:
       - data/models/gbrt_model.pkl
-      - data/plots_figs/learning_curve.png
+    #  - data/plots_figs/learning_curve.png
+    plots:
+      - data/plots_figs/learning_curve.png:
+          cache: false    
   evaluate:
     cmd: python src/evaluate.py
     deps:
@@ -78,8 +81,13 @@ stages:
       - src/config.py
     outs:
       - data/predictions/prediction.csv
-      - data/plots_figs/deviance.png
-      - data/plots_figs/feature_importance.png
+    #  - data/plots_figs/deviance.png
+    #  - data/plots_figs/feature_importance.png
     metrics:
       - scores.json:
           cache: false
+    plots:
+      - data/plots_figs/deviance.png:
+          cache: false
+      - data/plots_figs/feature_importance.png:
+          cache: false         

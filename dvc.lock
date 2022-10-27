@@ -34,20 +34,23 @@ stages:
         anomaly_detect.seed: 36
     outs:
     - path: data/anomaly_treated/anomalous_data.csv
-      md5: 3a6b5488ed8ba680ce46f0f1db6ab8d5
-      size: 1566
+      md5: 733247841bc0c7e8164f8227a129cac3
+      size: 1561
     - path: data/anomaly_treated/anomaly_treated_data.csv
-      md5: 21979072ff901b9849a2b8670f4ba2a4
-      size: 198577
+      md5: 58ffb0bef2889e61b2fc7634451a5124
+      size: 198582
     - path: data/plots_figs/anomaly_detect_plt_pca.png
-      md5: c3c31356fde1bc8038994305a63bb61f
-      size: 159532
+      md5: 78dc204aa0f458ee266d6f3136843bc4
+      size: 159832
+    - path: data/plots_figs/anomaly_detect_plt_tsne.png
+      md5: fff2a19414887a7cec4d0547ac5b101e
+      size: 154915
   data-split:
     cmd: python src/data_split.py
     deps:
     - path: data/anomaly_treated/anomaly_treated_data.csv
-      md5: 21979072ff901b9849a2b8670f4ba2a4
-      size: 198577
+      md5: 58ffb0bef2889e61b2fc7634451a5124
+      size: 198582
     - path: src/config.py
       md5: fb091cc52a55961ad7794da791d7471f
       size: 509
@@ -60,25 +63,25 @@ stages:
         data-split.split: 0.2
     outs:
     - path: data/features/x_test.npy
-      md5: 592f2e74efae3012309e938cf5553849
+      md5: fa5d88bfa92d9849b5ff0e0c59b70980
       size: 23232
     - path: data/features/x_train.npy
-      md5: 909090e9c7fea9dc367e830899839615
+      md5: be14390ea1fe3cbf3e8050b119c681ad
       size: 92480
     - path: data/features/y_test.npy
-      md5: c599fff40eb9794e2fc38d6d7ec6f9a6
+      md5: 51909867f36f637299d1fc3dcde5d558
       size: 3016
     - path: data/features/y_train.npy
-      md5: ecdd98fa620fe27761009191b21cdb52
+      md5: fe4c502556baede83cd1ae5a1b32d2f6
       size: 11672
   normalize:
     cmd: python src/normalize.py
     deps:
     - path: data/features/x_test.npy
-      md5: 592f2e74efae3012309e938cf5553849
+      md5: fa5d88bfa92d9849b5ff0e0c59b70980
       size: 23232
     - path: data/features/x_train.npy
-      md5: 909090e9c7fea9dc367e830899839615
+      md5: be14390ea1fe3cbf3e8050b119c681ad
       size: 92480
     - path: src/config.py
       md5: fb091cc52a55961ad7794da791d7471f
@@ -88,19 +91,19 @@ stages:
       size: 741
     outs:
     - path: data/models/scaling_model.pkl
-      md5: 9919d9d947a9e7d2e3ece636e14c2589
+      md5: 716695892ec2e51171443adc0b3331ff
       size: 642
   training:
     cmd: python src/training.py
     deps:
     - path: data/features/x_train.npy
-      md5: 909090e9c7fea9dc367e830899839615
+      md5: be14390ea1fe3cbf3e8050b119c681ad
       size: 92480
     - path: data/features/y_train.npy
-      md5: ecdd98fa620fe27761009191b21cdb52
+      md5: fe4c502556baede83cd1ae5a1b32d2f6
       size: 11672
     - path: data/models/scaling_model.pkl
-      md5: 9919d9d947a9e7d2e3ece636e14c2589
+      md5: 716695892ec2e51171443adc0b3331ff
       size: 642
     - path: src/config.py
       md5: fb091cc52a55961ad7794da791d7471f
@@ -120,25 +123,25 @@ stages:
         training.n_est: 100
     outs:
     - path: data/models/gbrt_model.pkl
-      md5: 6087e2a9f452ca2e077064c9429873d9
-      size: 206716
+      md5: e1d118238589d985b72851baeb98eece
+      size: 214140
     - path: data/plots_figs/learning_curve.png
-      md5: d4fe15c8b067122f82ca29c5a29a2294
-      size: 88252
+      md5: fce343eef04ca330c360e136799a8eee
+      size: 87553
   evaluate:
     cmd: python src/evaluate.py
     deps:
     - path: data/features/x_test.npy
-      md5: 592f2e74efae3012309e938cf5553849
+      md5: fa5d88bfa92d9849b5ff0e0c59b70980
       size: 23232
     - path: data/features/y_test.npy
-      md5: c599fff40eb9794e2fc38d6d7ec6f9a6
+      md5: 51909867f36f637299d1fc3dcde5d558
       size: 3016
     - path: data/models/gbrt_model.pkl
-      md5: 6087e2a9f452ca2e077064c9429873d9
-      size: 206716
+      md5: e1d118238589d985b72851baeb98eece
+      size: 214140
     - path: data/models/scaling_model.pkl
-      md5: 9919d9d947a9e7d2e3ece636e14c2589
+      md5: 716695892ec2e51171443adc0b3331ff
       size: 642
     - path: src/config.py
       md5: fb091cc52a55961ad7794da791d7471f
@@ -148,14 +151,14 @@ stages:
       size: 1559
     outs:
     - path: data/plots_figs/deviance.png
-      md5: 99fa8de531656f2a0f89097799a44f52
-      size: 36147
+      md5: 50cfcf903ac57ecc7edf8bdafdfe30f4
+      size: 36164
     - path: data/plots_figs/feature_importance.png
-      md5: bd66456197db89e536978c075ef6be41
-      size: 44893
+      md5: a48da0b181eafb9c5e1ebd391393ce8d
+      size: 43299
     - path: data/predictions/prediction.csv
-      md5: 1f75e4e9f5a2c145303e17bd09cb13eb
-      size: 8970
+      md5: b9264106d16423ed7eea58b75573fdef
+      size: 8951
     - path: scores.json
-      md5: a7001a08b6f372983096fc83d3f24373
-      size: 67
+      md5: 955a59f77e6f85da310100689d938c22
+      size: 65
