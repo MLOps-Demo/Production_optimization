@@ -23,11 +23,11 @@ def evaluate():
     model = pickle.load(open(str(Config.MODELS_PATH/ "gbrt_model.pkl"), "rb"))
 
     fig2 = deviance(model, x_te_scale, y_test)
-    fig2.savefig(str(Config.PLOTS_PATH/ "deviance.png"))
+    fig2.savefig(str(Config.PLOTS_PATH/ "deviance.png"), dpi = 150)
 
     _, cols = load_data()
     fig3 = feature_importance(model, cols, x_te_scale, y_test)
-    fig3.savefig(str(Config.PLOTS_PATH/ "feature_importance.png"))
+    fig3.savefig(str(Config.PLOTS_PATH/ "feature_importance.png"), dpi = 150)
 
     predictions = model.predict(x_te_scale)
     prediction_csv = pd.DataFrame({"target_labels": y_test,

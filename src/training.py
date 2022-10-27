@@ -46,7 +46,8 @@ def training():
     title = "Learning Curves"
     kfold = KFold(n_splits=10)
     fig1 = plot_learning_curve(model, title, x_tr_scale, y_train, cv=kfold, n_jobs=2)
-    fig1.savefig(str(Config.PLOTS_PATH/ "learning_curve.png"))
+    fig1.tight_layout()
+    fig1.savefig(str(Config.PLOTS_PATH/ "learning_curve.png"), dpi = 150)
 
     with open(str(Config.MODELS_PATH/ "gbrt_model.pkl"), "wb") as x_f:
         pickle.dump(model, x_f)

@@ -7,7 +7,7 @@ from sklearn.inspection import permutation_importance
 def plot_learning_curve(estimator, title, X, y, axes=None, ylim=None, cv=None,
                         n_jobs=None, train_sizes=np.linspace(.1, 1.0, 5)):
     if axes is None:
-        _, axes = plt.subplots(1, 3, figsize=(20, 5))
+        _, axes = plt.subplots(1, 3, figsize=(30, 7.5))
 
     axes[0].set_title(title)
     if ylim is not None:
