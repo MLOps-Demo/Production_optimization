@@ -15,12 +15,17 @@ stages:
       - src/config.py
     params:
       - anomaly_detect.seed
-      - anomaly_detect.anomaly_contamination 
+      - anomaly_detect.anomaly_contamination
     outs:
       - data/anomaly_treated/anomaly_treated_data.csv
       - data/anomaly_treated/anomalous_data.csv
-      - data/plots_figs/anomaly_detect_plt_pca.png
-      - data/plots_figs/anomaly_detect_plt_tsne.png
+      #- data/plots_figs/anomaly_detect_plt_pca.png
+      #- data/plots_figs/anomaly_detect_plt_tsne.png
+    plots:
+      - data/plots_figs/anomaly_detect_plt_pca.png:
+          cache: false
+      - data/plots_figs/anomaly_detect_plt_pca.png:
+          cache: false
   data-split:
     cmd: python src/data_split.py
     deps:
