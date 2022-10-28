@@ -23,8 +23,8 @@ stages:
       md5: 6e032aac042ee4bbd4b47ca55fa02af9
       size: 199998
     - path: src/anomaly_detect.py
-      md5: b2f0460bf8ede8690c89216c8a3e5eb4
-      size: 6759
+      md5: 3c93bd25a80744dc1c7af687bd9f5124
+      size: 7038
     - path: src/config.py
       md5: fb091cc52a55961ad7794da791d7471f
       size: 509
@@ -33,6 +33,9 @@ stages:
         anomaly_detect.anomaly_contamination: 0.005
         anomaly_detect.seed: 25
     outs:
+    - path: anomaly_summary.json
+      md5: 99865fb6fa398ffbad529b8bc7071b6b
+      size: 102
     - path: data/anomaly_treated/anomalous_data.csv
       md5: 4c95a345120602a7098d6f15f99cbbc6
       size: 1563
@@ -40,11 +43,11 @@ stages:
       md5: d5a9e965458a89003b41d7e71a049ab4
       size: 198580
     - path: data/plots_figs/anomaly_detect_plt_pca.png
-      md5: b48986d5d73d8158f9cef5a210ba42ed
-      size: 159784
+      md5: a42c4df40e5b695a6f27d0d98acce0a9
+      size: 160214
     - path: data/plots_figs/anomaly_detect_plt_tsne.png
-      md5: 0fa4644c313a90430cc76c0ad4e971d4
-      size: 156228
+      md5: 89f07b243e030a4244cb0070210e5af0
+      size: 158002
   data-split:
     cmd: python src/data_split.py
     deps:

@@ -19,8 +19,8 @@ stages:
     outs:
       - data/anomaly_treated/anomaly_treated_data.csv
       - data/anomaly_treated/anomalous_data.csv
-      #- data/plots_figs/anomaly_detect_plt_pca.png
-      #- data/plots_figs/anomaly_detect_plt_tsne.png
+      - anomaly_summary.json:
+          cache: false
     plots:
       - data/plots_figs/anomaly_detect_plt_pca.png:
           cache: false
@@ -66,7 +66,6 @@ stages:
       - training.min_leaf
     outs:
       - data/models/gbrt_model.pkl
-    #  - data/plots_figs/learning_curve.png
     plots:
       - data/plots_figs/learning_curve.png:
           cache: false    
@@ -81,8 +80,6 @@ stages:
       - src/config.py
     outs:
       - data/predictions/prediction.csv
-    #  - data/plots_figs/deviance.png
-    #  - data/plots_figs/feature_importance.png
     metrics:
       - scores.json:
           cache: false

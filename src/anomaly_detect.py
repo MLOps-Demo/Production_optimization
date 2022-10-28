@@ -5,6 +5,7 @@ import seaborn as sns
 import yaml
 import warnings
 warnings.filterwarnings("ignore")
+import json
 
 #import dimnesionality reduction algorithms
 from sklearn.decomposition import PCA
@@ -81,7 +82,8 @@ def anomaly_detect(X, feat_names):
     
     print("\n-Original shape of dataframe: ", original_shape , "\n-Final shape of dataframe: " , final_shape)
     print("-Total anomalies detected and removed = ", original_len_df - final_len_df)
-    anomalies_percent = "{:.2f}".format(((original_len_df - final_len_df)/original_len_df)*100) + ' %'
+    anomaly_samples_removed = original_len_df - final_len_df
+    anomalies_percent = "{:.2f}".format((anomaly_samples_removed/original_len_df)*100) + ' %'
     print("-Percentage of anomalies removed =", anomalies_percent)
     #path to save the anomaly treated dataset
     normal_path = str(Config.ANOMALY_TREATED_DATAS_FILE_PATH/ "anomaly_treated_data.csv")
@@ -90,6 +92,9 @@ def anomaly_detect(X, feat_names):
     anomalous_df.to_csv(anomaly_path, index = None)
     print("\nExported the Anomaly treated and anomalous dataset separately to csv file in the folder -> '{}'".format(str(Config.ANOMALY_TREATED_DATAS_FILE_PATH)))
     
+    with open("anomaly_summary.json", "w") as fd:
+        json.dump({"Total observations": original_len_df,"% Anomaly removed": anomalies_percent,"Anomalies removed": anomaly_samples_removed ,}, fd, indent=4)
+
     return
 
 def anomaly_plots(X, feat_names, anomaly_index_list):
