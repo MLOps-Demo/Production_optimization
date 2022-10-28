@@ -19,6 +19,7 @@ stages:
     outs:
       - data/anomaly_treated/anomaly_treated_data.csv
       - data/anomaly_treated/anomalous_data.csv
+    metrics:
       - anomaly_summary.json:
           cache: false
     plots:

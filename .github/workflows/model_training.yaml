@@ -46,6 +46,9 @@ jobs:
           # Adding the metrics
           dvc metrics diff --show-md main >> report.md
           cml comment create report.md
+
+          # Uploading the models to AWS S3 using aws cli command
+          aws s3 cp data/models/ s3://dyna-mlops-usecases/production_optimization/deployed_models/production_optimization_bins_oct_2022/ --recursive
           
           # Add figure to report
           cml asset publish data/plots_figs/deviance.png --md >> report1.md
