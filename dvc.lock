@@ -123,14 +123,14 @@ stages:
         training.m_depth: 4
         training.min_leaf: 6
         training.min_split: 6
-        training.n_est: 200
+        training.n_est: 250
     outs:
     - path: data/models/gbrt_model.pkl
-      md5: 995e963a152db271b664bf10457035b3
-      size: 370459
+      md5: c0293c21378c9677b3d783f0301411cb
+      size: 449240
     - path: data/plots_figs/learning_curve.png
-      md5: 5ef067080df3d7e35dddb615435d4359
-      size: 202521
+      md5: c915849ec90e2beaa41a797f8c4c6961
+      size: 207778
   evaluate:
     cmd: python src/evaluate.py
     deps:
@@ -141,8 +141,8 @@ stages:
       md5: fac680e59306b7b4aaf8defc4b116dde
       size: 3016
     - path: data/models/gbrt_model.pkl
-      md5: 995e963a152db271b664bf10457035b3
-      size: 370459
+      md5: c0293c21378c9677b3d783f0301411cb
+      size: 449240
     - path: data/models/scaling_model.pkl
       md5: 232aa0d0511057e9574f7e1a2be4b71d
       size: 642
@@ -154,14 +154,14 @@ stages:
       size: 1581
     outs:
     - path: data/plots_figs/deviance.png
-      md5: 11d0785c7b64075fc135be7d7cb38fc2
-      size: 52654
+      md5: 713ff9fc9e2ba76860273fe14264c2d2
+      size: 52416
     - path: data/plots_figs/feature_importance.png
-      md5: 6d94a70fd2a870e47c6d443589db39e0
-      size: 70265
+      md5: 834523011cd5f2a34c810f5aa707f884
+      size: 70331
     - path: data/predictions/prediction.csv
-      md5: be0de58e0eadc5cc0a18d4aa5fcf02fb
-      size: 8969
+      md5: 41fae9df4f81407fa579288c3ca1b4f0
+      size: 8963
     - path: scores.json
-      md5: c1e914a406feb6b86565717edca76b3f
+      md5: 40b339b8e0c672adc1494e3a3bf10609
       size: 67
