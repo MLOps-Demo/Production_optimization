@@ -53,7 +53,7 @@ def anomaly_detect(X, feat_names):
         clf.fit(df[feature_names])
         #Predict the outlier labels
         y_pred = clf.labels_
-        #add the outlier label column to the dataframe.
+        #add the outlier label column to the dataframe
         new_col = 'y_pred_' + clf_name
         X[new_col] = y_pred
     print('Anomaly detection model execution completed')
