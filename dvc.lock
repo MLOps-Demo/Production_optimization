@@ -30,30 +30,30 @@ stages:
       size: 509
     params:
       params.yaml:
-        anomaly_detect.anomaly_contamination: 0.0047
+        anomaly_detect.anomaly_contamination: 0.0055
         anomaly_detect.seed: 42
     outs:
     - path: anomaly_summary.json
-      md5: 6037ee159919045e831d8f706c27039d
+      md5: 3deba3596aef89fdb4e74c966467971c
       size: 98
     - path: data/anomaly_treated/anomalous_data.csv
-      md5: 626a4a774847203bb637f6495449fbaf
-      size: 1457
+      md5: 4c95a345120602a7098d6f15f99cbbc6
+      size: 1563
     - path: data/anomaly_treated/anomaly_treated_data.csv
-      md5: 54fa9580630fd887456a934dcc10f48e
-      size: 198686
+      md5: d5a9e965458a89003b41d7e71a049ab4
+      size: 198580
     - path: data/plots_figs/anomaly_detect_plt_pca.png
-      md5: 04e4ff89b8f9a8df67c7311a8f0412a2
-      size: 159792
+      md5: a42c4df40e5b695a6f27d0d98acce0a9
+      size: 160214
     - path: data/plots_figs/anomaly_detect_plt_tsne.png
-      md5: 57ec620c2721de3af11997b058128361
-      size: 150871
+      md5: f80fa9931c42d6899b7b28b505096195
+      size: 150860
   data-split:
     cmd: python src/data_split.py
     deps:
     - path: data/anomaly_treated/anomaly_treated_data.csv
-      md5: 54fa9580630fd887456a934dcc10f48e
-      size: 198686
+      md5: d5a9e965458a89003b41d7e71a049ab4
+      size: 198580
     - path: src/config.py
       md5: fb091cc52a55961ad7794da791d7471f
       size: 509
@@ -66,26 +66,26 @@ stages:
         data-split.split: 0.2
     outs:
     - path: data/features/x_test.npy
-      md5: ad1d8f34e392fd5f134a9aa0956f22f8
+      md5: 0b5144e2e28e3b078a0210c45c93db85
       size: 23232
     - path: data/features/x_train.npy
-      md5: a2d537ccfb30afdc62c6591a5a31d3ff
-      size: 92544
+      md5: d2f31e209ef7f348325fae30630bad17
+      size: 92480
     - path: data/features/y_test.npy
-      md5: 934fc38444a429dc7adffa7ec2c8a3cb
+      md5: fac680e59306b7b4aaf8defc4b116dde
       size: 3016
     - path: data/features/y_train.npy
-      md5: 6a405af95553b9ad5024ec653a93eb8c
-      size: 11680
+      md5: 543dbb36ee6ddfcae7f74e62518100fa
+      size: 11672
   normalize:
     cmd: python src/normalize.py
     deps:
     - path: data/features/x_test.npy
-      md5: ad1d8f34e392fd5f134a9aa0956f22f8
+      md5: 0b5144e2e28e3b078a0210c45c93db85
       size: 23232
     - path: data/features/x_train.npy
-      md5: a2d537ccfb30afdc62c6591a5a31d3ff
-      size: 92544
+      md5: d2f31e209ef7f348325fae30630bad17
+      size: 92480
     - path: src/config.py
       md5: fb091cc52a55961ad7794da791d7471f
       size: 509
@@ -94,20 +94,20 @@ stages:
       size: 741
     outs:
     - path: data/models/scaling_model.pkl
-      md5: a5f3ba0e80b885c0460f97d7bc0f8360
-      size: 641
+      md5: 232aa0d0511057e9574f7e1a2be4b71d
+      size: 642
   training:
     cmd: python src/training.py
     deps:
     - path: data/features/x_train.npy
-      md5: a2d537ccfb30afdc62c6591a5a31d3ff
-      size: 92544
+      md5: d2f31e209ef7f348325fae30630bad17
+      size: 92480
     - path: data/features/y_train.npy
-      md5: 6a405af95553b9ad5024ec653a93eb8c
-      size: 11680
+      md5: 543dbb36ee6ddfcae7f74e62518100fa
+      size: 11672
     - path: data/models/scaling_model.pkl
-      md5: a5f3ba0e80b885c0460f97d7bc0f8360
-      size: 641
+      md5: 232aa0d0511057e9574f7e1a2be4b71d
+      size: 642
     - path: src/config.py
       md5: fb091cc52a55961ad7794da791d7471f
       size: 509
@@ -126,26 +126,26 @@ stages:
         training.n_est: 100
     outs:
     - path: data/models/gbrt_model.pkl
-      md5: d5897b3b90004fc74fa0b101373ada42
-      size: 201761
+      md5: 2d3549c752c110f01866dee363336f83
+      size: 207393
     - path: data/plots_figs/learning_curve.png
-      md5: 507f6f928ae682f1d917538446561e75
-      size: 212969
+      md5: 0d9fecd20ee437d6a6fbfcc3666c8169
+      size: 209172
   evaluate:
     cmd: python src/evaluate.py
     deps:
     - path: data/features/x_test.npy
-      md5: ad1d8f34e392fd5f134a9aa0956f22f8
+      md5: 0b5144e2e28e3b078a0210c45c93db85
       size: 23232
     - path: data/features/y_test.npy
-      md5: 934fc38444a429dc7adffa7ec2c8a3cb
+      md5: fac680e59306b7b4aaf8defc4b116dde
       size: 3016
     - path: data/models/gbrt_model.pkl
-      md5: d5897b3b90004fc74fa0b101373ada42
-      size: 201761
+      md5: 2d3549c752c110f01866dee363336f83
+      size: 207393
     - path: data/models/scaling_model.pkl
-      md5: a5f3ba0e80b885c0460f97d7bc0f8360
-      size: 641
+      md5: 232aa0d0511057e9574f7e1a2be4b71d
+      size: 642
     - path: src/config.py
       md5: fb091cc52a55961ad7794da791d7471f
       size: 509
@@ -154,14 +154,14 @@ stages:
       size: 1581
     outs:
     - path: data/plots_figs/deviance.png
-      md5: 69656b82432c3a3f460967d06c28bcec
-      size: 58338
+      md5: 9c1467d17e3f8350ed97afeb9a260169
+      size: 58510
     - path: data/plots_figs/feature_importance.png
-      md5: a181f6e298cb33634d7ac5c991fa5d5a
-      size: 73755
+      md5: aaee0c866e50fef01c60ddb7dc2a480e
+      size: 73851
     - path: data/predictions/prediction.csv
-      md5: f64f15bec24fb81d12b5a18b00ec86f8
-      size: 8966
+      md5: a87e549901225b049a08a30fe5a96aef
+      size: 8979
     - path: scores.json
-      md5: e8e3df7a4176a7a3151b78009a361120
+      md5: b914bf1608fce04888f79f8c43301e0e
       size: 67
