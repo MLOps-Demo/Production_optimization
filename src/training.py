@@ -20,7 +20,7 @@ min_samples_leaf = params["min_leaf"]
 
 # param_grid = {'n_estimators': n_estimators,
 #               'max_depth': max_depth,
-#               'learning_rate': learning_rate,
+#               'learning_rate':  learning_rate,
 #               'min_samples_split': min_samples_split,
 #               'min_samples_leaf': min_samples_leaf}
 

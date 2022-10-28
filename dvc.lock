@@ -30,8 +30,8 @@ stages:
       size: 509
     params:
       params.yaml:
-        anomaly_detect.anomaly_contamination: 0.0045
-        anomaly_detect.seed: 25
+        anomaly_detect.anomaly_contamination: 0.0047
+        anomaly_detect.seed: 42
     outs:
     - path: anomaly_summary.json
       md5: 6037ee159919045e831d8f706c27039d
@@ -46,8 +46,8 @@ stages:
       md5: 04e4ff89b8f9a8df67c7311a8f0412a2
       size: 159792
     - path: data/plots_figs/anomaly_detect_plt_tsne.png
-      md5: 956b88977f8ca050d502e91e662d21d6
-      size: 158002
+      md5: 57ec620c2721de3af11997b058128361
+      size: 150871
   data-split:
     cmd: python src/data_split.py
     deps:
@@ -115,8 +115,8 @@ stages:
       md5: 6ba77068b0d427393851d60621db8330
       size: 4009
     - path: src/training.py
-      md5: 538f5b534aba16fe527b666c29e4cb12
-      size: 2032
+      md5: 5b48b0524f65cbad0558c19fd3b82210
+      size: 2033
     params:
       params.yaml:
         training.lr: 0.02
@@ -126,11 +126,11 @@ stages:
         training.n_est: 100
     outs:
     - path: data/models/gbrt_model.pkl
-      md5: c7589c2e6b2162290d9378bb82da67a3
+      md5: d5897b3b90004fc74fa0b101373ada42
       size: 201761
     - path: data/plots_figs/learning_curve.png
-      md5: 785e50fc688344b21c882355d9833899
-      size: 215592
+      md5: 507f6f928ae682f1d917538446561e75
+      size: 212969
   evaluate:
     cmd: python src/evaluate.py
     deps:
@@ -141,7 +141,7 @@ stages:
       md5: 934fc38444a429dc7adffa7ec2c8a3cb
       size: 3016
     - path: data/models/gbrt_model.pkl
-      md5: c7589c2e6b2162290d9378bb82da67a3
+      md5: d5897b3b90004fc74fa0b101373ada42
       size: 201761
     - path: data/models/scaling_model.pkl
       md5: a5f3ba0e80b885c0460f97d7bc0f8360
@@ -160,8 +160,8 @@ stages:
       md5: a181f6e298cb33634d7ac5c991fa5d5a
       size: 73755
     - path: data/predictions/prediction.csv
-      md5: 92493627656d69f29612e5e0f56864bd
-      size: 8975
+      md5: f64f15bec24fb81d12b5a18b00ec86f8
+      size: 8966
     - path: scores.json
       md5: e8e3df7a4176a7a3151b78009a361120
       size: 67
