@@ -2,7 +2,10 @@ import numpy as np
 import matplotlib.pyplot as plt
 from sklearn.model_selection import learning_curve
 from sklearn.inspection import permutation_importance
+import yaml
 
+params = yaml.safe_load(open("params.yaml"))["training"]
+n_estimators = params["n_est"]
 
 def plot_learning_curve(estimator, title, X, y, axes=None, ylim=None, cv=None,
                         n_jobs=None, train_sizes=np.linspace(.1, 1.0, 5)):
@@ -60,7 +63,7 @@ def plot_learning_curve(estimator, title, X, y, axes=None, ylim=None, cv=None,
     return plt
 
 
-def deviance(model, x, y, n_estimators=100):
+def deviance(model, x, y, n_estimators=n_estimators):
     test_score = np.zeros((n_estimators,), dtype=np.float64)
     for i, y_pred in enumerate(model.staged_predict(x)):
         test_score[i] = model.loss_(y, y_pred)

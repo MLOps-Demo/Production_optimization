@@ -30,7 +30,7 @@ stages:
       size: 509
     params:
       params.yaml:
-        anomaly_detect.anomaly_contamination: 0.0055
+        anomaly_detect.anomaly_contamination: 0.005
         anomaly_detect.seed: 42
     outs:
     - path: anomaly_summary.json
@@ -112,8 +112,8 @@ stages:
       md5: fb091cc52a55961ad7794da791d7471f
       size: 509
     - path: src/learning_curves.py
-      md5: 6ba77068b0d427393851d60621db8330
-      size: 4009
+      md5: d469beacdc401742c0d8c24a3a0c5309
+      size: 4121
     - path: src/training.py
       md5: 5b48b0524f65cbad0558c19fd3b82210
       size: 2033
@@ -123,14 +123,14 @@ stages:
         training.m_depth: 4
         training.min_leaf: 6
         training.min_split: 6
-        training.n_est: 100
+        training.n_est: 150
     outs:
     - path: data/models/gbrt_model.pkl
-      md5: 2d3549c752c110f01866dee363336f83
-      size: 207393
+      md5: 5e57a569922689acb4c993081f933871
+      size: 290654
     - path: data/plots_figs/learning_curve.png
-      md5: 0d9fecd20ee437d6a6fbfcc3666c8169
-      size: 209172
+      md5: 3916bee4b9db87d12cd36f2caa05f31c
+      size: 215977
   evaluate:
     cmd: python src/evaluate.py
     deps:
@@ -141,8 +141,8 @@ stages:
       md5: fac680e59306b7b4aaf8defc4b116dde
       size: 3016
     - path: data/models/gbrt_model.pkl
-      md5: 2d3549c752c110f01866dee363336f83
-      size: 207393
+      md5: 5e57a569922689acb4c993081f933871
+      size: 290654
     - path: data/models/scaling_model.pkl
       md5: 232aa0d0511057e9574f7e1a2be4b71d
       size: 642
@@ -154,14 +154,14 @@ stages:
       size: 1581
     outs:
     - path: data/plots_figs/deviance.png
-      md5: 9c1467d17e3f8350ed97afeb9a260169
-      size: 58510
+      md5: 16233c8f68f5e953875e7358a465d33e
+      size: 53331
     - path: data/plots_figs/feature_importance.png
-      md5: aaee0c866e50fef01c60ddb7dc2a480e
-      size: 73851
+      md5: ab1c6d6902d69959b6369d7b211110bd
+      size: 71332
     - path: data/predictions/prediction.csv
-      md5: a87e549901225b049a08a30fe5a96aef
-      size: 8979
+      md5: bb0e4006e479f9f030c1afd43ecc36c9
+      size: 8959
     - path: scores.json
-      md5: b914bf1608fce04888f79f8c43301e0e
-      size: 67
+      md5: 6bd22e3e4f0255b33c8551c203af0539
+      size: 66
