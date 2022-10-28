@@ -46,7 +46,7 @@ def anomaly_detect(X, feat_names):
     
     original_len_df = len(X)
     original_shape = X.shape
-    print ("Anomaly contamination considerd for dataset =", contamination*100, "%")
+    print ("Initial Anomaly contamination percentage considerd for dataset =", contamination*100, "%")
     for i, (clf_name,clf) in enumerate(classifiers.items()) :      
         # fit the dataset to the model
         print ('Running anomaly detector Model {}: {}'.format(i+1,clf_name))
