@@ -1,8 +1,8 @@
 anomaly_detect:
   seed: 36
   anomaly_contamination: 0.0045
-  neighbours_knn: 5
-  clusters_cblof: 15
+  neighbours_knn: 10
+  clusters_cblof: 20
   nu_ocsvm: 0.01
   tol_ocsvm: 0.001
 
@@ -14,5 +14,5 @@ training:
   n_est: 100
   m_depth: 5
   lr: 0.02
-  min_split: 5
+  min_split: 6
   min_leaf: 6
