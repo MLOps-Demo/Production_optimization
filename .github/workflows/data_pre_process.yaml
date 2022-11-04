@@ -56,5 +56,3 @@ jobs:
 
           cml comment create report4.md
           cml comment create report5.md
-      - name: "Anomaly summary csv upload"
-        if: steps.check_files.outputs.files_exists == 'true'
