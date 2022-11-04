@@ -5,32 +5,40 @@ on: [push]
 jobs:
   data_pre_processing:
     runs-on: [ubuntu-latest]
+    env:
+      repo_token: ${{ secrets.GITHUB_TOKEN }}
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      AWS_DEFAULT_REGION: ${{ secrets.AWS_DEFAULT_REGION }}
+      AWS_S3_ENDPOINT: https://s3.amazonaws.com
     steps:
       - uses: actions/checkout@v2
       - uses: iterative/setup-cml@v1
       - uses: iterative/setup-dvc@v1
       - uses: actions/setup-python@v4
         with:
-          python-version: '3.8'
+          python-version: "3.8"
       - uses: unfor19/install-aws-cli-action@master
         with:
-          version: '2.6.1'
-      - name: 'Anomaly Detection'
-        env:
-          repo_token: ${{ secrets.GITHUB_TOKEN }}
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          AWS_DEFAULT_REGION: ${{ secrets.AWS_DEFAULT_REGION }}
-          AWS_S3_ENDPOINT: https://s3.amazonaws.com
+          version: "2.6.1"
+      - name: "Copy Anomaly summary csv file from AWS S3"
+        run: |
+          aws s3 cp s3://dyna-mlops-usecases/production_optimization/deployed_models/production_optimization_bins_oct_2022/Anomaly_detection/commit_based_anomalies_prod_optimization.csv commit_based_anomalies_prod_optimization.csv
+        continue-on-error: true
+      - name: "Anomaly Detection"
         run: |
           # Intall all dependencies
           pip install -r requirements.txt
           # Pull latest data from remote.
           dvc pull -r myS3remote
-          
+
           # Reproduce training and evaluate pipeline
           dvc repro dvc.yaml:create-dataset
           dvc repro dvc.yaml:anomaly-detect
+
+          # Generating the Anomaly summary report csv for the UI
+          python3 src/summary_anom_csv.py
+          aws s3 cp commit_based_anomalies_prod_optimization.csv s3://dyna-mlops-usecases/production_optimization/deployed_models/production_optimization_bins_oct_2022/Anomaly_detection/commit_based_anomalies_prod_optimization.csv
 
           # Uploading the anomaly related data to AWS S3 using aws cli command
           aws s3 cp data/anomaly_treated/ s3://dyna-mlops-usecases/production_optimization/deployed_models/production_optimization_bins_oct_2022/Anomaly_detection/ --recursive
@@ -41,10 +49,12 @@ jobs:
           #shred --verbose status.txt
           echo "FALSE" > status.txt
           aws s3 cp status.txt s3://dyna-mlops-usecases/production_optimization/deployed_models/production_optimization_bins_oct_2022/Anomaly_detection/status.txt
-          
+
           # Add figure to report
           cml asset publish data/plots_figs/anomaly_detect_plt_pca.png --md >> report4.md
           cml asset publish data/plots_figs/anomaly_detect_plt_tsne.png --md >> report5.md
 
           cml comment create report4.md
           cml comment create report5.md
+      - name: "Anomaly summary csv upload"
+        if: steps.check_files.outputs.files_exists == 'true'
