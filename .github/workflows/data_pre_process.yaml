@@ -62,7 +62,7 @@ jobs:
           echo "FALSE" > status.txt
           aws s3 cp status.txt s3://dyna-mlops-usecases/production_optimization/deployed_models/production_optimization_bins_oct_2022/Anomaly_detection/status.txt
 
-          # Add figure to report
+          #  Add figure to report
           cml asset publish data/plots_figs/anomaly_detect_plt_pca.png --md >> report4.md
           cml asset publish data/plots_figs/anomaly_detect_plt_tsne.png --md >> report5.md
 
