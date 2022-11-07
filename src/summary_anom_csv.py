@@ -37,7 +37,7 @@ col_dict['treatment_status'] = 'FALSE'
 #Create new dataframe from the newly created dictionary and concat with data from AWS S3 (commit summary history)
 anomaly_summary_df = pd.DataFrame([col_dict])
 anomaly_summary_df = pd.concat([anomaly_summary_df, summary_df], ignore_index = True)
-anomaly_summary_df = anomaly_summary_df.iloc[:9]
+anomaly_summary_df = anomaly_summary_df.iloc[:10]
 anomaly_summary_df.to_csv('commit_based_anomalies_prod_optimization.csv', index = None)
 print('Anomaly summary report csv file generated successfully')
 
