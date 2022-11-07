@@ -31,7 +31,7 @@ col_dict['branch_name'] = json_commit_id['Branch']
 col_dict['total_observations'] = json_anom['Total observations']
 col_dict['anomalies_detected'] = json_anom['Anomalies detected']
 col_dict['anomaly_detected_percentage'] = str(json_anom['% Anomaly detected']) + ' %'
-col_dict['normal_observations'] = json_anom['Total observations'] - json_anom['Anomalies removed']
+col_dict['normal_observations'] = json_anom['Total observations'] - json_anom['Anomalies detected']
 col_dict['treatment_status'] = 'FALSE'
 
 #Create new dataframe from the newly created dictionary and concat with data from AWS S3 (commit summary history)
