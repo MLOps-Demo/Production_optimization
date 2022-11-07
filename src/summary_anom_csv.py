@@ -32,7 +32,7 @@ col_dict['total_observations'] = json_anom['Total observations']
 col_dict['anomalies_detected'] = json_anom['Anomalies detected']
 col_dict['anomaly_detected_percentage'] = str(json_anom['% Anomaly detected']) + ' %'
 col_dict['normal_observations'] = json_anom['Total observations'] - json_anom['Anomalies detected']
-col_dict['treatment_status'] = 'FALSE'
+col_dict['treatment_status'] = 'NOT DONE'
 
 #Create new dataframe from the newly created dictionary and concat with data from AWS S3 (commit summary history)
 anomaly_summary_df = pd.DataFrame([col_dict])
