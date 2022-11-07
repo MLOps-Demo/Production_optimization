@@ -25,8 +25,6 @@ jobs:
         id: vars
         shell: bash
         run: |
-          #echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
-          #echo "::set-output name=sha_short::$(git rev-parse --short HEAD)"
           echo "branch=${GITHUB_REF#refs/heads/}" >> $GITHUB_OUTPUT
           echo "sha_short=$(git rev-parse --short "$GITHUB_SHA")" >> $GITHUB_OUTPUT
       - name: Create Json file with Commit ID
@@ -35,10 +33,6 @@ jobs:
         with:
           name: "commit_id.json"
           json: '{"Branch": "${{ steps.vars.outputs.branch }}", "Sha": "${{ steps.vars.outputs.sha_short }}"}'
-          dir: "./"
-      - name: "Copy commit ID json file to AWS S3"
-        run: |
-          aws s3 cp commit_id.json s3://dyna-mlops-usecases/production_optimization/deployed_models/production_optimization_bins_oct_2022/Anomaly_detection/commit_id.json
       - name: "Copy Anomaly summary csv file from AWS S3"
         run: |
           aws s3 cp s3://dyna-mlops-usecases/production_optimization/deployed_models/production_optimization_bins_oct_2022/Anomaly_detection/commit_based_anomalies_prod_optimization.csv commit_based_anomalies_prod_optimization.csv
