@@ -94,8 +94,8 @@ def anomaly_detect(X, feat_names):
     
     with open("anomaly_summary.json", "w") as fd:
         json.dump({"Total observations": original_len_df,
-        "% Anomaly removed": round((anomaly_samples_removed/original_len_df)*100, 2),
-        "Anomalies removed": anomaly_samples_removed }, fd, indent=4)
+        "% Anomaly detected": round((anomaly_samples_removed/original_len_df)*100, 2),
+        "Anomalies detected": anomaly_samples_removed }, fd, indent=4)
 
     return
 
