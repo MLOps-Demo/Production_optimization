@@ -7,17 +7,24 @@ try:
   summary_df = pd.read_csv(file_name)
 except FileNotFoundError:
     print("No anomaly summary csv file found in S3, so creating a new one")
-    column_nms = ['commit_id','total_observations','anomalies_detected',
+    column_nms = ['commit_id','branch_name','total_observations','anomalies_detected',
     'anomaly_detected_percentage','normal_observations','anomalies_after_treated_by_expert',
     'normal_observations_after_treated_by_expert','treatment_status']
     summary_df = pd.DataFrame(columns = column_nms) 
 
-# Opening JSON file
+# Opening Commit ID JSON file generated from Github actions workflow
+f = open('commit_id.json')
+# returns JSON object as a dictionary
+json_commit_id = json.load(f)
+
+# Opening anomaly summary JSON file
 f = open('anomaly_summary.json')
 # returns JSON object as a dictionary
 json_anom = json.load(f)
 
 col_dict = dict.fromkeys(column_nms, "NULL")
+col_dict['commit_id'] = json_commit_id['Sha']
+col_dict['branch_name'] = json_commit_id['Branch']
 col_dict['total_observations'] = json_anom['Total observations']
 col_dict['anomalies_detected'] = json_anom['Anomalies removed']
 col_dict['anomaly_detected_percentage'] = str(json_anom['% Anomaly removed']) + ' %'
