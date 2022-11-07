@@ -34,7 +34,7 @@ jobs:
         uses: jsdaniell/create-json@v1.2.1
         with:
           name: "commit_id.json"
-          json: '{"Branch": ${{ steps.vars.outputs.branch }}, "Sha": ${{ steps.vars.outputs.sha_short }}}'
+          json: '{"Branch": "${{ steps.vars.outputs.branch }}", "Sha": "${{ steps.vars.outputs.sha_short }}}"'
           dir: "./"
       - name: "Copy commit ID json file to AWS S3"
         run: |
