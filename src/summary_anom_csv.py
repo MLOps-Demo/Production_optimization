@@ -4,7 +4,7 @@ import json
 file_name = "commit_based_anomalies_prod_optimization.csv"
 
 # Defining the column names for the dictionary/ dataframe creation
-column_nms = ['commit_id','branch_name','total_observations','anomalies_detected',
+column_nms = ['commit_id','branch_name', 'commit_date','total_observations','anomalies_detected',
 'anomaly_detected_percentage','normal_observations','anomalies_after_treated_by_expert',
 'normal_observations_after_treated_by_expert','treatment_status']
 
@@ -25,9 +25,10 @@ f = open('anomaly_summary.json')
 json_anom = json.load(f)
 
 #Append the values from the json file to new dictionary
-col_dict = dict.fromkeys(column_nms, "NULL")
+col_dict = dict.fromkeys(column_nms, " ")
 col_dict['commit_id'] = json_commit_id['Sha']
 col_dict['branch_name'] = json_commit_id['Branch']
+col_dict['commit_date'] = json_commit_id['Date']
 col_dict['total_observations'] = json_anom['Total observations']
 col_dict['anomalies_detected'] = json_anom['Anomalies detected']
 col_dict['anomaly_detected_percentage'] = str(json_anom['% Anomaly detected']) + ' %'
